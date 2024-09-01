@@ -10,7 +10,6 @@ export const SearchComp: React.FC<ISearchProps> = () => {
 
   const [searchTerm, setSearchTerm] = useState<string>('')
 
-  // The useGetStarWarsCategoriesQuery hook automatically fetches the available categories from the StarWars API.
   const { data: categoriesData, error: categoriesError, isLoading: isCategoriesLoading, isSuccess: isCategoriesSuccess } = useGetStarWarsCategoriesQuery();
 
   const onSearchTermChanged = (value: string) => setSearchTerm(value);

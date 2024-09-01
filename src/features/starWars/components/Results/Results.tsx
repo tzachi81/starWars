@@ -4,7 +4,7 @@ import { resultsUtils } from './resultsUtils';
 import { CategoryCard } from '../CategoryCard/CategoryCard';
 import { CardGroup, Container, Divider, Header, Icon, Segment } from 'semantic-ui-react';
 
-import classes from './Results.module.css';
+import classes from './Results.module.scss';
 
 interface IResultsProps {
     searchTerm: string,
@@ -41,7 +41,10 @@ export const Results: React.FC<IResultsProps> = ({ categories, searchTerm }) => 
         return (
             searchResults && searchResults.length > 0 &&
 
-            <CardGroup centered className={classes.cardGroup}>
+            <CardGroup 
+            centered 
+            stackable
+            className={classes.cardGroup}>
                 {searchResults.map((categoryResults: any, index: number) => {
                     if (categoryResults.count > 0) {
 

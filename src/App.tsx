@@ -8,12 +8,12 @@ import 'semantic-ui-css/semantic.min.css'
 const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <Container fluid>
+      
+        <Container textAlign="center" fluid >
           <Header as='h1'>Starwars Data Search</Header>
           <SearchComp />
         </Container>
-      </header>
+      
     </div>
   )
 }

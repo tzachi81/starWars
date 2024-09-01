@@ -1,19 +1,14 @@
 import React from 'react'
 import {
-    CardMeta,
     CardHeader,
-    CardDescription,
     CardContent,
     Card,
-    Icon,
-    Image,
     Button,
-    List,
-    SemanticICONS
 } from 'semantic-ui-react'
 
-import CategoryList from './CategoryList';
-import classes from './CategoryCard.module.scss';
+import CategoryList from './CategoryCardList';
+
+
 
 interface IResultsProps {
     title: string,
@@ -24,17 +19,15 @@ interface IResultsProps {
 export const CategoryCard: React.FC<IResultsProps> = ({ title, data }) => {
 
     return (
-        <Card className={classes.categoryCard}>
-            <CardContent>
-                <CardHeader>
-                    {title}
+        <Card>
+            <CardContent textAlign='left'>
+                <CardHeader textAlign='center'>
+                    {title.toUpperCase()}
                 </CardHeader>
-            </CardContent>
-            <CardContent>
                 <CategoryList items={data} />
             </CardContent>
-            <CardContent>
-                <Button content onClick={() => console.log(`Go to ${title} page`)}>View All</Button>
+            <CardContent textAlign='center' extra>
+                <Button color='black' disabled={title !== 'people'} content onClick={() => console.log(`Go to ${title} page`)}>View All</Button>
             </CardContent>
 
         </Card>

@@ -4,18 +4,20 @@ import {
     ListItem
 } from 'semantic-ui-react'
 
+import classes from './CategoryCardList.module.scss';
+
 
 interface ICategoryListProps {
     items: any[]
 }
 
-export const CategoryList: React.FC<ICategoryListProps> = ({ items }) => {
+export const CategoryCardList: React.FC<ICategoryListProps> = ({ items }) => {
 
     return (
-        <List>
+        <List className={classes.categoryList}>
             {items.map((result: any) => <ListItem key={result.name}>{result.name || result.title}</ListItem>)}
         </List>
     )
 }
 
-export default CategoryList
+export default CategoryCardList
