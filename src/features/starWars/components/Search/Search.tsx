@@ -1,15 +1,15 @@
-import { ReactElement, ReactEventHandler, ReactHTMLElement, useState } from 'react'
-import styles from './Search.module.css';
-import { useGetStarWarsCategoriesQuery, useGetStarWarsDataQuery } from '../../slices/starWarsApiSlice';
+import { useState } from 'react';
+import { useGetStarWarsCategoriesQuery } from '../../slices/starWarsApiSlice';
 import { Results } from '../Results/Results';
+import { Container, Divider, Grid, GridColumn, Header, Search, Segment } from 'semantic-ui-react';
 
 
 interface ISearchProps { }
 
-export const Search: React.FC<ISearchProps> = () => {
+export const SearchComp: React.FC<ISearchProps> = () => {
 
   const [searchTerm, setSearchTerm] = useState<string>('')
-  
+
   // The useGetStarWarsCategoriesQuery hook automatically fetches the available categories from the StarWars API.
   const { data: categoriesData, error: categoriesError, isLoading: isCategoriesLoading, isSuccess: isCategoriesSuccess } = useGetStarWarsCategoriesQuery();
 
@@ -34,22 +34,28 @@ export const Search: React.FC<ISearchProps> = () => {
 
   if (isCategoriesSuccess) {
     return (
-      <div className={styles.container}>
-        <h3>Search in StarWars Data</h3>
-        <span>Search:
-          <input
-            type='text'
-            name='searchTerm'
-            value={searchTerm}
-            onChange={(event) => onSearchTermChanged(event.target.value)}>
-          </input>
-        </span>
+      <>
 
+        <Grid>
+          <GridColumn >
+            <Search
+              loading={isCategoriesLoading}
+              showNoResults={false}
+              placeholder='Search...'
+              onSearchChange={(event) => onSearchTermChanged((event.target as HTMLInputElement).value)}
+              results={Results}
+              value={searchTerm}
+            />
+          </GridColumn>
+        </Grid>
+        <Divider horizontal />
         <Results
           searchTerm={searchTerm}
           categories={categoriesData}
         />
-      </div>
+      </>
+
+
     )
   }
 

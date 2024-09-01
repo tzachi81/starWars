@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery, FetchBaseQueryError, FetchBaseQueryMeta } from '@reduxjs/toolkit/query/react'
 
-import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes"
+import { BaseQueryApi, QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes"
 
 
 export interface ICategories {
@@ -23,14 +23,16 @@ export const starWarsApiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   reducerPath: 'starWarsApi',
   // Tag types for caching and invalidation for scaling-ups the slices/api responses.
-  tagTypes: ['starWarsData', 'starWarsCategoriesData'],
+  tagTypes: ['starWarsSearchResults', 'starWarsCategories'],
   endpoints: build => ({
 
     getStarWarsCategories: build.query<ICategories, void>({
-      query: () => '/',
+      providesTags: ['starWarsCategories'],
+        query: () => '/',
     }),
-
+    
     getStarWarsData: build.query<IStarWarsApiResponse[], { categories: ICategories, searchTerm: string }>({
+      providesTags: ['starWarsSearchResults'],
       async queryFn({ categories, searchTerm }, _queryApi, _extraOptions, fetchWithBQ) {
         //In case the search term is empty, return an empty array
         if (searchTerm === '') {
@@ -42,11 +44,12 @@ export const starWarsApiSlice = createApi({
           if (response.error) throw response.error;
           return response.data as IStarWarsApiResponse[];
         }));
-
+        // Dispatch an action to update the state with the fetched data
+        
+        // _queryApi.dispatch(starWarsApiSlice.endpoints.getStarWarsData.matchFulfilled(results));
         return { data: results } as QueryReturnValue<IStarWarsApiResponse[], FetchBaseQueryError, FetchBaseQueryMeta>;
       },
     }),
-
   }),
 })
 

@@ -1,24 +1,44 @@
-// import styles from './Results.module.css';
+import React from 'react'
+import {
+    CardMeta,
+    CardHeader,
+    CardDescription,
+    CardContent,
+    Card,
+    Icon,
+    Image,
+    Button,
+    List,
+    SemanticICONS
+} from 'semantic-ui-react'
+
+import CategoryList from './CategoryList';
+import classes from './CategoryCard.module.scss';
 
 interface IResultsProps {
     title: string,
     data: any[]
 }
 
+
 export const CategoryCard: React.FC<IResultsProps> = ({ title, data }) => {
 
-    return <div>
-        <h4>{title}</h4>
-        {
-            data.map((result: any, index: number) => {
-                return (
-                    <li
-                        key={`${result.name}_${index}`}>
-                        {result.name}
-                    </li>
-                )
-            })
-        }
-        <button onClick={() => console.log(`Go to ${title} page`)}>View All</button>
-    </div>
+    return (
+        <Card className={classes.categoryCard}>
+            <CardContent>
+                <CardHeader>
+                    {title}
+                </CardHeader>
+            </CardContent>
+            <CardContent>
+                <CategoryList items={data} />
+            </CardContent>
+            <CardContent>
+                <Button content onClick={() => console.log(`Go to ${title} page`)}>View All</Button>
+            </CardContent>
+
+        </Card>
+    )
 }
+
+export default CategoryCard

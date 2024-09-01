@@ -1,7 +1,10 @@
-import styles from './Results.module.css';
+// import styles from './Results.module.css';
 import { ICategories, useGetStarWarsDataQuery } from '../../slices/starWarsApiSlice';
 import { resultsUtils } from './resultsUtils';
 import { CategoryCard } from '../CategoryCard/CategoryCard';
+import { CardGroup, Container, Divider, Header, Icon, Segment } from 'semantic-ui-react';
+
+import classes from './Results.module.css';
 
 interface IResultsProps {
     searchTerm: string,
@@ -15,41 +18,41 @@ export const Results: React.FC<IResultsProps> = ({ categories, searchTerm }) => 
     const resultsPerCategory = 3;
 
     const currentCategorytitles = Object.keys(categories).join(', ');
-    
+
     if (searchError) {
         return (
-            <div>
+            <>
+                <Icon name='cancel'></Icon>
                 <h1>There was an error.</h1>
-            </div>
+            </>
         )
     }
 
     if (isSearchLoading) {
         return (
-            <div>
+            <>
+                <Icon loading name='spinner' />
                 <h1>Loading...</h1>
-            </div>
+            </>
         )
     }
 
-    // ${Object.keys(categories).map((category, index) => <span key={`${index}${category}`}>{category}&nbsp;</span>)}`
     if (isSearchSuccess) {
         return (
             searchResults && searchResults.length > 0 &&
-            <div className={styles.container}>
-                <h3>{`Searching "${searchTerm}" in ${currentCategorytitles}` }</h3>
-                <ul>
-                    {searchResults.map((categoryResults, index) => {
-                        if (categoryResults.count > 0) {
 
-                            const results = categoryResults.results.slice(0, resultsPerCategory);
-                            const categoryName: string = resultsUtils.reduceCategoryNames(results[0].url);
+            <CardGroup centered className={classes.cardGroup}>
+                {searchResults.map((categoryResults: any, index: number) => {
+                    if (categoryResults.count > 0) {
 
-                            return <CategoryCard key={index} title={categoryName} data={results} />
-                        }
-                    })}
-                </ul>
-            </div>
+                        const results = categoryResults.results.slice(0, resultsPerCategory);
+                        const categoryName: string = resultsUtils.reduceCategoryNames(results[0].url);
+
+                        return <CategoryCard key={index} title={categoryName} data={results} />
+                    }
+                })}
+            </CardGroup>
+
         )
     }
 
