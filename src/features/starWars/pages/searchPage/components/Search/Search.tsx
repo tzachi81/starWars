@@ -1,10 +1,13 @@
 import { useState } from 'react';
 
-import classes from './Search.module.scss'
-import { Container, Divider, Grid, GridColumn, Icon, Label, Search } from 'semantic-ui-react';
+import classes from './Search.module.scss';
+
+import { Container, Divider, Grid, GridColumn, Header, Icon, Search } from 'semantic-ui-react';
 
 import { useGetStarWarsCategoriesQuery } from '../../../../slices/starWarsApiSlice';
 import { Results } from '../Results/Results';
+import { Logo } from '../../../../../../app/components/Logo';
+import { mainLogo } from '../../../../../../assets/logo';
 
 
 interface ISearchProps { }
@@ -26,7 +29,6 @@ export const SearchComp: React.FC<ISearchProps> = () => {
   }
 
   if (isCategoriesLoading) {
-    //TODO: Consider adding a spinner here
     return (
       <div>
         <Icon loading name='certificate' /> Fetching Categories...
@@ -36,9 +38,24 @@ export const SearchComp: React.FC<ISearchProps> = () => {
 
   if (isCategoriesSuccess) {
     return (
-      <Container className={classes.searchContainer}>
-        {/* <Label> */}
+      <div className={classes.searchContainer}>
+        <Container
 
+          textAlign='center'
+          fluid >
+          <Logo imageUrl={mainLogo} />
+          <Header
+            content={
+              <>
+                <p>Data Search</p>
+                <p>powered by: <a href={'https://swapi.dev/'} target='_blank' rel='noopener noreferrer'>SWAPI -
+                The Star Wars API</a></p>
+              </>
+            }
+            sub={true} 
+            as='h3' 
+            color='yellow'
+          />
 
           <Grid>
             <GridColumn >
@@ -47,19 +64,20 @@ export const SearchComp: React.FC<ISearchProps> = () => {
                 showNoResults={false}
                 placeholder='Search...'
                 onSearchChange={(event) => onSearchTermChanged((event.target as HTMLInputElement).value)}
-                results={Results}
                 value={searchTerm}
               />
             </GridColumn>
           </Grid>
-        {/* </Label> */}
-        <Divider horizontal />
-        <Results
-          searchTerm={searchTerm}
-          categories={categoriesData}
-        />
-      </Container>
 
+          <Divider horizontal />
+
+          <Results
+            searchTerm={searchTerm}
+            categories={categoriesData}
+          />
+
+        </Container>
+      </div>
 
     )
   }

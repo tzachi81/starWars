@@ -48,10 +48,9 @@ export const Results: React.FC<IResultsProps> = ({ categories, searchTerm }) => 
                 {searchResults.map((categoryResults: any, index: number) => {
                     if (categoryResults.count > 0) {
 
-                        const results = categoryResults.results.slice(0, resultsPerCategory);
-                        const categoryName: string = resultsUtils.reduceCategoryNames(results[0].url);
+                        const categoryName: string = resultsUtils.reduceCategoryNames(categoryResults.results[0].url);
 
-                        return <CategoryCard key={index} title={categoryName} data={results} />
+                        return <CategoryCard key={index} title={categoryName} data={categoryResults} />
                     }
                 })}
             </CardGroup>
