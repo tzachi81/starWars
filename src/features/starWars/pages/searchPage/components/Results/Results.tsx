@@ -13,47 +13,40 @@ interface IResultsProps {
 
 export const Results: React.FC<IResultsProps> = ({ categories, searchTerm }) => {
 
-    const { data: searchResults, error: searchError, isLoading: isSearchLoading, isSuccess: isSearchSuccess } = useGetStarWarsDataQuery({ categories, searchTerm });
-
-    const resultsPerCategory = 3;
+    const { data: searchResults, error: searchError, isLoading: isSearchLoading, isSuccess: isSearchSuccess, isFetching: isSearchFetching } = useGetStarWarsDataQuery({ categories, searchTerm });
 
     const currentCategorytitles = Object.keys(categories).join(', ');
 
     if (searchError) {
         return (
-            <>
-                <Icon name='cancel'></Icon>
-                <h1>There was an error.</h1>
-            </>
+            <p><Icon name='cancel'></Icon>There was an error.</p>
         )
     }
 
-    if (isSearchLoading) {
+    if (isSearchFetching) {
         return (
-            <>
-                <Icon loading name='spinner' />
-                <h1>Loading...</h1>
-            </>
+            <p><Icon loading name='spinner' />Getting results...</p>
         )
     }
 
     if (isSearchSuccess) {
         return (
             searchResults && searchResults.length > 0 &&
+            <Segment basic loading={isSearchLoading} size='big'>
+                <CardGroup
+                    centered
+                    stackable
+                    className={classes.cardGroup}>
+                    {searchResults.map((categoryResults: any, index: number) => {
+                        if (categoryResults.count > 0) {
 
-            <CardGroup 
-            centered 
-            stackable
-            className={classes.cardGroup}>
-                {searchResults.map((categoryResults: any, index: number) => {
-                    if (categoryResults.count > 0) {
+                            const categoryName: string = resultsUtils.reduceCategoryNames(categoryResults.results[0].url);
 
-                        const categoryName: string = resultsUtils.reduceCategoryNames(categoryResults.results[0].url);
-
-                        return <CategoryCard key={index} title={categoryName} data={categoryResults} />
-                    }
-                })}
-            </CardGroup>
+                            return <CategoryCard key={index} title={categoryName} data={categoryResults} />
+                        }
+                    })}
+                </CardGroup>
+            </Segment>
 
         )
     }

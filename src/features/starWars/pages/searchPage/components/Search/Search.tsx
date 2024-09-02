@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import classes from './Search.module.scss';
 
-import { Container, Divider, Grid, GridColumn, Header, Icon, Search } from 'semantic-ui-react';
+import { Container, Divider, Grid, GridColumn, GridRow, Header, Icon, Search, Segment } from 'semantic-ui-react';
 
 import { useGetStarWarsCategoriesQuery } from '../../../../slices/starWarsApiSlice';
 import { Results } from '../Results/Results';
@@ -16,13 +16,13 @@ export const SearchComp: React.FC<ISearchProps> = () => {
 
   const [searchTerm, setSearchTerm] = useState<string>('')
 
-  const { data: categoriesData, error: categoriesError, isLoading: isCategoriesLoading, isSuccess: isCategoriesSuccess } = useGetStarWarsCategoriesQuery();
+  const { data: categoriesData, error: categoriesError, isLoading: isCategoriesLoading, isFetching: isCategoriesFetching, isSuccess: isCategoriesSuccess } = useGetStarWarsCategoriesQuery();
 
   const onSearchTermChanged = (value: string) => setSearchTerm(value);
 
   if (categoriesError) {
     return (
-      <div>
+      <div className={classes.searchContainer}>
         <Icon name='cancel' /> There was an error fetching the categories.
       </div>
     )
@@ -30,8 +30,16 @@ export const SearchComp: React.FC<ISearchProps> = () => {
 
   if (isCategoriesLoading) {
     return (
-      <div>
-        <Icon loading name='certificate' /> Fetching Categories...
+      <div className={classes.searchContainer}>
+        <Icon loading name='spinner' /> Loading search...
+      </div>
+    )
+  }
+
+  if (isCategoriesFetching) {
+    return (
+      <div className={classes.searchContainer}>
+        <Icon loading name='spinner' /> Fetching Categories...
       </div>
     )
   }
@@ -44,37 +52,40 @@ export const SearchComp: React.FC<ISearchProps> = () => {
           textAlign='center'
           fluid >
           <Logo imageUrl={mainLogo} />
-          <Header
-            content={
-              <>
-                <p>Data Search</p>
-                <p>powered by: <a href={'https://swapi.dev/'} target='_blank' rel='noopener noreferrer'>SWAPI -
-                The Star Wars API</a></p>
-              </>
-            }
-            sub={true} 
-            as='h3' 
+          <Header sub={true}
+            as='h3'
             color='yellow'
+            content={
+              <p>Data Search</p>
+            }
           />
 
-          <Grid>
-            <GridColumn >
-              <Search
-                loading={isCategoriesLoading}
-                showNoResults={false}
-                placeholder='Search...'
-                onSearchChange={(event) => onSearchTermChanged((event.target as HTMLInputElement).value)}
-                value={searchTerm}
-              />
-            </GridColumn>
-          </Grid>
+          <Container>
+            <Grid divided
+              centered>
+              <GridRow >
+                <Search
+                  loading={isCategoriesLoading}
+                  showNoResults={false}
+                  placeholder='Search...'
+                  onSearchChange={(event) => onSearchTermChanged((event.target as HTMLInputElement).value)}
+                  value={searchTerm}
+                />
+              </GridRow>
+              <GridRow>
+                <p>Powered by: <a href={'https://swapi.dev/'} target='_blank' rel='noopener noreferrer'>SWAPI -
+                  The Star Wars API</a></p>
+              </GridRow>
+              <GridRow>
 
-          <Divider horizontal />
+                <Results
+                  searchTerm={searchTerm}
+                  categories={categoriesData}
+                />
+              </GridRow>
+            </Grid>
+          </Container>
 
-          <Results
-            searchTerm={searchTerm}
-            categories={categoriesData}
-          />
 
         </Container>
       </div>

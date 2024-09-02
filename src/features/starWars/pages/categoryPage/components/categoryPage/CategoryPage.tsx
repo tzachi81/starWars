@@ -1,7 +1,8 @@
 /**
  * [v] A click on “View All” should lead to the category page. You are required to implement only one list page - the people page -
  * [v] all other category pages will be blank with a title only. 
- * On the people page, the results will be displayed as a table with the option to delete or edit each row. 
+ * [v] On the people page, the results will be displayed as a table 
+ * [?] with the option to delete or edit each row. 
  * [v] Don’t display other entities' data in the table (vehicles, films, etc..), only the basic fields.
  * Above the table add a “Create” button - which allows adding a new character. Since there is no API for create/edit/delete,
  * you will handle it locally and there’s no need for persistence - refreshing the page will just reload the initial data.
@@ -43,7 +44,7 @@ export const CategoryPage: React.FC<ICategoryPageProps> = () => {
             <h1>{title.toUpperCase()}</h1>
 
             {reducedToBasicDetails && title === 'people' && <CategoryTable data={reducedToBasicDetails} /> }
-            
+
         </Container>
     )
 }

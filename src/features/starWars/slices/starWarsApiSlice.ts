@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery, FetchBaseQueryError, FetchBaseQueryMeta } from '@reduxjs/toolkit/query/react'
 
-import { BaseQueryApi, QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes"
+// @ts-ignore
+import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes"
 
 
 export interface ICategories {
@@ -29,6 +30,10 @@ export const starWarsApiSlice = createApi({
     getStarWarsCategories: build.query<ICategories, void>({
       providesTags: ['starWarsCategories'],
         query: () => '/',
+        merge: (existingCategories, newCategories) => {
+          return { ...existingCategories, ...newCategories };
+        },
+        keepUnusedDataFor: 3600, // Cache the data for 1 hour
     }),
     
     getStarWarsData: build.query<IStarWarsApiResponse[], { categories: ICategories, searchTerm: string }>({
@@ -44,9 +49,6 @@ export const starWarsApiSlice = createApi({
           if (response.error) throw response.error;
           return response.data as IStarWarsApiResponse[];
         }));
-        // Dispatch an action to update the state with the fetched data
-        
-        // _queryApi.dispatch(starWarsApiSlice.endpoints.getStarWarsData.matchFulfilled(results));
         return { data: results } as QueryReturnValue<IStarWarsApiResponse[], FetchBaseQueryError, FetchBaseQueryMeta>;
       },
     }),
