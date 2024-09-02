@@ -1,7 +1,7 @@
 // import styles from './Results.module.css';
-import { ICategories, useGetStarWarsDataQuery } from '../../slices/starWarsApiSlice';
+import { ICategories, useGetStarWarsDataQuery } from '../../../../slices/starWarsApiSlice';
 import { resultsUtils } from './resultsUtils';
-import { CategoryCard } from '../CategoryCard/CategoryCard';
+import { CategoryCard } from '../../../../../../app/components/CategoryCard/CategoryCard';
 import { CardGroup, Container, Divider, Header, Icon, Segment } from 'semantic-ui-react';
 
 import classes from './Results.module.scss';
