@@ -1,22 +1,12 @@
 @import './theme/sw-theme.module.scss';
 
-.App {
-  text-align: center;
-  min-height: 100vh;
-  margin-top: 40px
-}
 
 .appContainer {
   display: flex;
-  align-items: center;
-  align-content: flex-start;
   background-image: url('./assets/wallpaper/sw_wallpaper.jpg'); 
   background-size: cover; 
   background-position: center;
-  height: 100vh; 
-  display: flex;
-  // flex-direction: column;
-  align-items: center;
+  height: 100vh;
   justify-content: center;
   color: $sw-darkSideYellow;
 }

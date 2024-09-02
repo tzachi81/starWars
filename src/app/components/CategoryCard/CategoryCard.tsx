@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { forwardRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import '../../../theme/sw-theme.module.scss';
 
@@ -15,25 +16,45 @@ import { CategoryCardList } from '../CategoryCardList'
 
 interface IResultsProps {
     title: string,
-    data: any[]
+    data: any
 }
 
 
-export const CategoryCard: React.FC<IResultsProps> = ({ title, data }) => {
+export const CategoryCard: React.FC<IResultsProps> = forwardRef((props, ref) => {
+
+    //limits initial results number
+    const resultsPerCategory = 3;
+
+    const { title, data } = props;
+
+    const firstXResults = data.results.slice(0, resultsPerCategory);
+    
+    const navigate = useNavigate();
+
+
+    const onCardButtonClicked = useCallback(() => {
+        navigate(`/category/${title}`, { state: { title, data } })
+    }, [ title]);
 
     return (
-        <Card style={{ backgroundColor: '#0B1838'}}>
+        <Card
+            style={{ backgroundColor: '#161F38' }}>
             <CardContent textAlign='left'>
                 <CardHeader style={{ color: '#e1b61d' }} textAlign='center'>
                     {title.toUpperCase()}
                 </CardHeader>
-                <CategoryCardList items={data} />
+                <CategoryCardList items={firstXResults} />
             </CardContent>
-            <CardContent textAlign='center' extra>                
-                <Button style={{ border: '2px solid #e1b61d', backgroundColor: '#173278', color: '#e1b61d' }} disabled={title !== 'people'} content onClick={() => console.log(`Go to ${title} page`)}>View All</Button>
+            <CardContent textAlign='center' extra>
+
+                <Button
+                    content='View All'
+                    style={{ border: '2px solid #e1b61d', backgroundColor: '#173278', color: '#e1b61d' }} 
+                    onClick={onCardButtonClicked}
+                />
             </CardContent>
         </Card>
     )
-}
+});
 
 export default CategoryCard;

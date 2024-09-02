@@ -1,24 +1,28 @@
-import { Container, Header } from 'semantic-ui-react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import { createBrowserHistory } from 'history';
 
 import classes from './App.module.scss';
+
 import 'semantic-ui-css/semantic.min.css';
 
+
+//pages/main components
+import { CategoryPage } from './features/starWars/pages/categoryPage/components/categoryPage/CategoryPage';
 import { SearchComp } from './features/starWars/pages/searchPage/components/Search/Search';
-import { Logo } from './app/components/Logo';
-import { mainLogo } from './assets/logo';
 
 const App = () => {
+
   return (
     <div className={classes.appContainer}>
-
-      <Container textAlign='center' fluid >
-        <Logo imageUrl={mainLogo} />
-        <Header as='h3' color='yellow'>Data Search</Header>
-        <SearchComp />
-      </Container>
-
+      <Router>
+        <Routes>
+          <Route path='/' element={<SearchComp />} />
+          <Route path='category/:title' element={<CategoryPage />} />
+        </Routes>
+      </Router>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
