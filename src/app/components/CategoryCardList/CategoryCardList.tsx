@@ -18,7 +18,7 @@ export const CategoryCardList: React.FC<ICategoryListProps> = ({ items }) => {
             {items.map((result: any, index) => (
                 <ListItem
                     key={`${result.name}_${index}`}
-                    style={{ color: '#e1de84' }}
+                    style={{ color: '#e1b61d' }}
                     content={result.name || result.title}
                 />
             )

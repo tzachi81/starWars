@@ -38,7 +38,10 @@ export const CategoryCard: React.FC<IResultsProps> = forwardRef((props, ref) => 
 
     return (
         <Card
-            style={{ backgroundColor: '#161F38' }}>
+        color='yellow' 
+        raised
+            style={{ backgroundColor: '#161F38', borderColor: 'none', color: '#e1b61d' }}
+            >
             <CardContent textAlign='left'>
                 <CardHeader style={{ color: '#e1b61d' }} textAlign='center'>
                     {title.toUpperCase()}
@@ -48,8 +51,11 @@ export const CategoryCard: React.FC<IResultsProps> = forwardRef((props, ref) => 
             <CardContent textAlign='center' extra>
 
                 <Button
+                compact
+                size='tiny'
+
                     content='View All'
-                    style={{ border: '2px solid #e1b61d', backgroundColor: '#173278', color: '#e1b61d' }} 
+                    style={{ backgroundColor: '#173278', color: '#e1b61d' }} 
                     onClick={onCardButtonClicked}
                 />
             </CardContent>

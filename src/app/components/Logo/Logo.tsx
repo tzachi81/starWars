@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './Logo.module.scss';
+import { Segment } from 'semantic-ui-react';
 
 interface ILogoProps {
   imageUrl: string;
@@ -7,8 +8,8 @@ interface ILogoProps {
 
 export const Logo: React.FC<ILogoProps> = ({ imageUrl }) => {
   return (
-    <div>
+    <Segment basic>
       <img className={classes.logo} src={imageUrl} alt="Star wars logo" />
-    </div>
+    </Segment>
   );
 };

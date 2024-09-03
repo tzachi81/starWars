@@ -25,7 +25,7 @@ import { CategoryTable } from '../categoryTable/categoryTable';
 
 
 
-export interface ICategoryPageProps {}
+export interface ICategoryPageProps { }
 
 
 export const CategoryPage: React.FC<ICategoryPageProps> = () => {
@@ -34,16 +34,23 @@ export const CategoryPage: React.FC<ICategoryPageProps> = () => {
 
     const location = useLocation()
 
-    const {title, data} = location.state;
+    const { title, data } = location.state;
 
     const reducedToBasicDetails = resultsUtils.reduceToBasicDetails(data.results);
 
     return (
         <Container fluid className={classes.categoryPage}>
-            <Button onClick={() => navigate(-1)} content='Back to search' />
+            <Button floated='right'
+            icon='left arrow'
+                compact
+                size='tiny'
+                style={{ backgroundColor: '#173278', color: '#e1b61d' }} 
+                onClick={() => navigate(-1)}
+                content='Back to search'
+            />
             <h1>{title.toUpperCase()}</h1>
 
-            {reducedToBasicDetails && title === 'people' && <CategoryTable data={reducedToBasicDetails} /> }
+            {reducedToBasicDetails && title === 'people' && <CategoryTable data={reducedToBasicDetails} />}
 
         </Container>
     )
