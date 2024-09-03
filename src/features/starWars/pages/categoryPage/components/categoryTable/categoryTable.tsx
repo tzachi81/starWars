@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useCallback, useState } from 'react';
+import React, { ReactEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 
 import { resultsUtils } from '../../../searchPage/components/Results/resultsUtils';
 
@@ -11,6 +11,7 @@ import {
     Table,
     Container,
 } from 'semantic-ui-react'
+import useClickOutside from '../../../../customHooks/customHooks';
 
 
 interface ICategoryTableProps {
@@ -18,6 +19,8 @@ interface ICategoryTableProps {
 }
 
 export const CategoryTable: React.FC<ICategoryTableProps> = ({ data }) => {
+
+    const tableRef = useRef<HTMLTableElement>(null);
 
     const [targetRow, setTargetRow] = useState<string | null>(null);
 
@@ -27,9 +30,19 @@ export const CategoryTable: React.FC<ICategoryTableProps> = ({ data }) => {
         return setTargetRow(event.currentTarget.id);
     }, [setTargetRow]);
 
+    const handleClickOutside = () => {
+        setTargetRow(null);
+    };
+
+    // Use the custom hook
+    useClickOutside(tableRef, handleClickOutside);
+
+
 
     return (
-        <Table color='black'
+        <Table
+            ref={tableRef}
+            color='black'
             inverted
             selectable
             striped
@@ -50,9 +63,9 @@ export const CategoryTable: React.FC<ICategoryTableProps> = ({ data }) => {
             <TableBody>
                 {data.map((row, index: number) => {
                     return <TableRow key={index}
-                    id={index.toString()}
-                    active={targetRow === index.toString()}
-                    onClick={updateTargetRow}
+                        id={index.toString()}
+                        active={targetRow === index.toString()}
+                        onClick={updateTargetRow}
                     >
                         {Object.keys(row).map((cell: any, index: number) => {
                             return <TableCell
