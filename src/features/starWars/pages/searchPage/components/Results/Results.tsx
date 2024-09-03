@@ -32,10 +32,11 @@ export const Results: React.FC<IResultsProps> = ({ categories, searchTerm }) => 
     if (isSearchSuccess) {
         return (
             searchResults && searchResults.length > 0 &&
-            <Segment basic loading={isSearchLoading} size='big'>
                 <CardGroup
+                    
                     centered
                     stackable
+                   
                     className={classes.cardGroup}>
                     {searchResults.map((categoryResults: any, index: number) => {
                         if (categoryResults.count > 0) {
@@ -46,7 +47,6 @@ export const Results: React.FC<IResultsProps> = ({ categories, searchTerm }) => 
                         }
                     })}
                 </CardGroup>
-            </Segment>
 
         )
     }

@@ -1,6 +1,8 @@
 import React, { forwardRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import theme from '../../../theme/sw-theme.module.scss';
+
 import '../../../theme/sw-theme.module.scss';
 
 import {
@@ -11,6 +13,8 @@ import {
 } from 'semantic-ui-react'
 
 import { CategoryCardList } from '../CategoryCardList'
+import { useAppDispatch } from '../../hooks';
+import { updateData, updateTitle } from '../../../features/starWars/slices/editorSlice';
 
 
 
@@ -20,7 +24,9 @@ interface IResultsProps {
 }
 
 
-export const CategoryCard: React.FC<IResultsProps> = forwardRef((props, ref) => {
+export const CategoryCard: React.FC<IResultsProps> = (props, ref) => {
+
+    const appDispatch = useAppDispatch();
 
     //limits initial results number
     const resultsPerCategory = 3;
@@ -28,17 +34,23 @@ export const CategoryCard: React.FC<IResultsProps> = forwardRef((props, ref) => 
     const { title, data } = props;
 
     const firstXResults = data.results.slice(0, resultsPerCategory);
-    
+
     const navigate = useNavigate();
 
 
     const onCardButtonClicked = useCallback(() => {
+        appDispatch(updateData(data));
+        appDispatch(updateTitle(title));
+        
         navigate(`/category/${title}`, { state: { title, data } })
-    }, [ title]);
+    }, [title]);
 
     return (
         <Card
-            style={{ backgroundColor: '#161F38' }}>
+            color='yellow'
+            raised
+            style={{ backgroundColor: '#161F38', borderColor: 'none', color: '#e1b61d' }}
+        >
             <CardContent textAlign='left'>
                 <CardHeader style={{ color: '#e1b61d' }} textAlign='center'>
                     {title.toUpperCase()}
@@ -48,13 +60,16 @@ export const CategoryCard: React.FC<IResultsProps> = forwardRef((props, ref) => 
             <CardContent textAlign='center' extra>
 
                 <Button
+                className={theme.button}
+                    compact
+                    size='tiny'
                     content='View All'
-                    style={{ border: '2px solid #e1b61d', backgroundColor: '#173278', color: '#e1b61d' }} 
+
                     onClick={onCardButtonClicked}
                 />
             </CardContent>
         </Card>
     )
-});
+};
 
 export default CategoryCard;
