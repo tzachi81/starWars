@@ -8,3 +8,14 @@ $sw-skywalkerBlue: #3a9dd9;
 $sw-galacticBlue: #001440;
 $sw-lightsaberBlue: #2E67F8;
 $sw-accentBlue: #173278;
+
+
+.button {
+    color: $sw-darkSideYellow !important;
+    background-color: $sw-galacticBlue!important;
+}
+
+.field {
+    color: $sw-darkSideYellow !important;
+    background-color: $sw-galacticBlue!important;
+}

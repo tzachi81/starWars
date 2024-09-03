@@ -33,9 +33,10 @@ export const Results: React.FC<IResultsProps> = ({ categories, searchTerm }) => 
         return (
             searchResults && searchResults.length > 0 &&
                 <CardGroup
+                    
                     centered
                     stackable
-                    itemsPerRow={6}
+                   
                     className={classes.cardGroup}>
                     {searchResults.map((categoryResults: any, index: number) => {
                         if (categoryResults.count > 0) {

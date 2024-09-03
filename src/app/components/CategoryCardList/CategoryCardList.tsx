@@ -14,7 +14,9 @@ interface ICategoryListProps {
 export const CategoryCardList: React.FC<ICategoryListProps> = ({ items }) => {
 
     return (
-        <List className={classes.categoryList}>
+        <List 
+        floated='left'
+        className={classes.categoryList}>
             {items.map((result: any, index) => (
                 <ListItem
                     key={`${result.name}_${index}`}

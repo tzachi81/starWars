@@ -1,0 +1,1 @@
+export type TCategoryEntity = { [key: string]: string | string[] };
