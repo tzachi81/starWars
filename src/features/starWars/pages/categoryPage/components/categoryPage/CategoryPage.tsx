@@ -47,7 +47,9 @@ export const CategoryPage: React.FC<ICategoryPageProps> = () => {
             />
             <h1>{title.toUpperCase()}</h1>
 
-            {reducedToBasicDetails && title === 'people' && <CategoryTable data={reducedToBasicDetails} />}
+            {/* {reducedToBasicDetails && title === 'people' &&  */}
+            <CategoryTable data={reducedToBasicDetails} />
+            {/* } */}
 
         </Container>
     )

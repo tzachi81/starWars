@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import { createBrowserHistory } from 'history';
-
 import classes from './App.module.scss';
 
 import 'semantic-ui-css/semantic.min.css';
