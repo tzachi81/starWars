@@ -1,3 +1,5 @@
+import classes from './categoryTable.module.scss';
+
 import React, { useCallback, useMemo, useRef, useState } from "react"
 
 import { resultsUtils } from "../../../searchPage/components/Results/resultsUtils"
@@ -124,7 +126,7 @@ export const CategoryTable: React.FC<ICategoryTableProps> = ({ data }) => {
         <Button icon className={theme.button} onClick={addRow}>
           <Icon name="add" />
         </Button>
-        <Table color="black" inverted selectable striped fixed>
+        <Table className={classes.table}  inverted selectable striped fixed>
           <TableHeader>
             <TableRow id="columns">
               <TableHeaderCell
