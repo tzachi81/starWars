@@ -29,7 +29,7 @@ export const Results: React.FC<IResultsProps> = ({ categories, searchTerm }) => 
         )
     }
 
-    if (isSearchSuccess) {
+    if (isSearchSuccess && searchResults) {
         return (
             searchResults && searchResults.length > 0 &&
                 <CardGroup

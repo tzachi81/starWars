@@ -7,8 +7,6 @@ export const resultsUtils = {
 
     reduceToBasicDetails: (data: any) => {
         let basicDetailsItems = data.map((dataItem: any) => {
-            console.log(dataItem);
-            console.log(Object.entries(dataItem));
             const tempObject = Object.entries(dataItem).reduce((acc: { [key: string]: any }, [key, value]) => {
                 if (!Array.isArray(value)) {
                     return { ...acc, [key]: value };

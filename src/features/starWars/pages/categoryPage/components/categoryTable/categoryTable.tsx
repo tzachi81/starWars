@@ -60,7 +60,6 @@ export const CategoryTable: React.FC<ICategoryTableProps> = ({ data }) => {
 
   const updateData = useCallback(
     (data: any) => {
-      console.log(data)
       setTableData((prevData: { [key: string]: any }[]) => {
         let temp = []
         if (targetRow === -1) {
