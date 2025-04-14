@@ -10,7 +10,7 @@ import { CategoryPage } from './features/starWars/pages/categoryPage/components/
 import { SearchComp } from './features/starWars/pages/searchPage/components/Search/Search';
 
 const App = () => {
-
+  
   return (
     <div className={classes.appContainer}>
       <Router>

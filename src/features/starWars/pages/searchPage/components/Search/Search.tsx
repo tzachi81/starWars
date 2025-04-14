@@ -22,19 +22,19 @@ import { mainLogo } from "../../../../../../assets/logo"
 interface ISearchProps {}
 
 export const SearchComp: React.FC<ISearchProps> = () => {
-  const [searchTerm, setSearchTerm] = useState<string>("")
+  // const [searchTerm, setSearchTerm] = useState<string>("")
 
   const {
-    data: categoriesData,
-    error: categoriesError,
-    isLoading: isCategoriesLoading,
-    isFetching: isCategoriesFetching,
-    isSuccess: isCategoriesSuccess,
-  } = useGetStarWarsCategoriesQuery()
+    data,
+    isError,
+    isLoading,
+    isFetching,
 
-  const onSearchTermChanged = (value: string) => setSearchTerm(value)
+  } = useGetStarWarsCategoriesQuery({})
 
-  if (categoriesError) {
+  // const onSearchTermChanged = (value: string) => setSearchTerm(value)
+
+  if (isError) {
     return (
       <div className={classes.searchContainer}>
         <Icon name="cancel" /> There was an error fetching the categories.
@@ -42,7 +42,7 @@ export const SearchComp: React.FC<ISearchProps> = () => {
     )
   }
 
-  if (isCategoriesLoading) {
+  if (isLoading) {
     return (
       <div className={classes.searchContainer}>
         <Icon loading name="spinner" /> Loading search...
@@ -50,7 +50,7 @@ export const SearchComp: React.FC<ISearchProps> = () => {
     )
   }
 
-  if (isCategoriesFetching) {
+  if (isFetching) {
     return (
       <div className={classes.searchContainer}>
         <Icon loading name="spinner" /> Fetching Categories...
@@ -58,7 +58,7 @@ export const SearchComp: React.FC<ISearchProps> = () => {
     )
   }
 
-  if (isCategoriesSuccess) {
+  if (data) {
     return (
       <div className={classes.searchContainer}>
         <Container textAlign="center" fluid>
@@ -72,9 +72,9 @@ export const SearchComp: React.FC<ISearchProps> = () => {
 
           <Container>
             <Grid divided centered>
-              <GridRow>
+              {/* <GridRow>
                 <Search
-                  loading={isCategoriesLoading}
+                  loading={isLoading}
                   showNoResults={false}
                   placeholder="Search..."
                   onSearchChange={event =>
@@ -84,12 +84,12 @@ export const SearchComp: React.FC<ISearchProps> = () => {
                   }
                   value={searchTerm}
                 />
-              </GridRow>
+              </GridRow> */}
               <GridRow>
                 <p>
                   Powered by:{" "}
                   <a
-                    href={"https://swapi.dev/"}
+                    href={"https://swapi.info/"}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -98,7 +98,7 @@ export const SearchComp: React.FC<ISearchProps> = () => {
                 </p>
               </GridRow>
               <GridRow>
-                <Results searchTerm={searchTerm} categories={categoriesData} />
+                <Results categories={data} />
               </GridRow>
             </Grid>
           </Container>

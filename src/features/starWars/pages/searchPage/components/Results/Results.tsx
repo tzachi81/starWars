@@ -1,55 +1,72 @@
-// import styles from './Results.module.css';
-import { ICategories, useGetStarWarsDataQuery } from '../../../../slices/starWarsApiSlice';
-import { resultsUtils } from './resultsUtils';
-import { CategoryCard } from '../../../../../../app/components/CategoryCard/CategoryCard';
-import { CardGroup, Container, Divider, Header, Icon, Segment } from 'semantic-ui-react';
+import {
+  ICategories,
+  useGetStarWarsDataQuery,
+} from "../../../../slices/starWarsApiSlice"
+import { CategoryCard } from "../../../../../../app/components/CategoryCard/CategoryCard"
+import {
+  CardGroup,
+  Icon,
+} from "semantic-ui-react"
 
-import classes from './Results.module.scss';
+import classes from "./Results.module.scss"
 
 interface IResultsProps {
-    searchTerm: string,
-    categories: ICategories
+  categories: ICategories
 }
 
-export const Results: React.FC<IResultsProps> = ({ categories, searchTerm }) => {
+export const Results: React.FC<IResultsProps> = ({
+  categories,
+}) => {
+  const {
+    data,
+    isError,
+    isLoading,
+    isSuccess,
+    isFetching,
+  } = useGetStarWarsDataQuery({ categories })
 
-    const { data: searchResults, error: searchError, isLoading: isSearchLoading, isSuccess: isSearchSuccess, isFetching: isSearchFetching } = useGetStarWarsDataQuery({ categories, searchTerm });
+  const currentCategorytitles: string[] = Object.keys(categories)
 
-    const currentCategorytitles = Object.keys(categories).join(', ');
+  if (isError) {
+    return (
+      <p>
+        <Icon name="cancel"></Icon>There was an error.
+      </p>
+    )
+  }
 
-    if (searchError) {
-        return (
-            <p><Icon name='cancel'></Icon>There was an error.</p>
-        )
-    }
+  if (isLoading) {
+    return (
+      <div className={classes.searchContainer}>
+        <Icon loading name="spinner" /> Loading search...
+      </div>
+    )
+  }
 
-    if (isSearchFetching) {
-        return (
-            <p><Icon loading name='spinner' />Getting results...</p>
-        )
-    }
+  if (isFetching) {
+    return (
+      <p>
+        <Icon loading name="spinner" />
+        Getting results...
+      </p>
+    )
+  }
 
-    if (isSearchSuccess && searchResults) {
-        return (
-            searchResults && searchResults.length > 0 &&
-                <CardGroup
-                    
-                    centered
-                    stackable
-                   
-                    className={classes.cardGroup}>
-                    {searchResults.map((categoryResults: any, index: number) => {
-                        if (categoryResults.count > 0) {
+  if (isSuccess && data?.length > 0) {
+    return (
+      <CardGroup centered stackable className={classes.cardGroup}>
+        {data.map((categoryResults: any, index: number) => {
+          return (
+            <CategoryCard
+              key={index}
+              title={currentCategorytitles[index]}
+              data={categoryResults}
+            />
+          )
+        })}
+      </CardGroup>
+    )
+  }
 
-                            const categoryName: string = resultsUtils.reduceCategoryNames(categoryResults.results[0].url);
-
-                            return <CategoryCard key={index} title={categoryName} data={categoryResults} />
-                        }
-                    })}
-                </CardGroup>
-
-        )
-    }
-
-    return null
+  return null
 }

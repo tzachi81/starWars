@@ -33,7 +33,7 @@ export const CategoryCard: React.FC<IResultsProps> = (props, ref) => {
 
     const { title, data } = props;
 
-    const firstXResults = data.results.slice(0, resultsPerCategory);
+    const firstXResults = data.slice(0, resultsPerCategory);
 
     const navigate = useNavigate();
 
@@ -63,7 +63,7 @@ export const CategoryCard: React.FC<IResultsProps> = (props, ref) => {
                 className={theme.button}
                     compact
                     size='tiny'
-                    content='View All'
+                    content='More...'
 
                     onClick={onCardButtonClicked}
                 />
