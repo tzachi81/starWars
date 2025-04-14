@@ -24,13 +24,8 @@ interface ISearchProps {}
 export const SearchComp: React.FC<ISearchProps> = () => {
   // const [searchTerm, setSearchTerm] = useState<string>("")
 
-  const {
-    data,
-    isError,
-    isLoading,
-    isFetching,
-
-  } = useGetStarWarsCategoriesQuery({})
+  const { data, isError, isLoading, isFetching } =
+    useGetStarWarsCategoriesQuery({})
 
   // const onSearchTermChanged = (value: string) => setSearchTerm(value)
 
@@ -67,25 +62,9 @@ export const SearchComp: React.FC<ISearchProps> = () => {
             sub={true}
             as="h3"
             color="yellow"
-            content={<p>Data Search</p>}
-          />
-
-          <Container>
-            <Grid divided centered>
-              {/* <GridRow>
-                <Search
-                  loading={isLoading}
-                  showNoResults={false}
-                  placeholder="Search..."
-                  onSearchChange={event =>
-                    onSearchTermChanged(
-                      (event.target as HTMLInputElement).value,
-                    )
-                  }
-                  value={searchTerm}
-                />
-              </GridRow> */}
-              <GridRow>
+            content={
+              <>
+                <p>Star Wars data</p>
                 <p>
                   Powered by:{" "}
                   <a
@@ -96,7 +75,12 @@ export const SearchComp: React.FC<ISearchProps> = () => {
                     SWAPI - The Star Wars API
                   </a>
                 </p>
-              </GridRow>
+              </>
+            }
+          />
+
+          <Container>
+            <Grid divided centered>
               <GridRow>
                 <Results categories={data} />
               </GridRow>
