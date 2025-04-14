@@ -176,13 +176,14 @@ export const CategoryTable: React.FC<ICategoryTableProps> = ({ data }) => {
                         />
                       </TableCell>
                       {Object.keys(row).map((cell: any, index: number) => {
+                        const value = row[cell];
                         return (
                           <TableCell
                             key={index}
                             tooltip={row[cell]}
                             style={{ color: "#3a9dd9" }}
                           >
-                            {row[cell]}
+                            {(cell === 'created' || cell === 'edited') ? value.replace('T',' ').substring(1, value.lastIndexOf(':')): value}
                           </TableCell>
                         )
                       })}
